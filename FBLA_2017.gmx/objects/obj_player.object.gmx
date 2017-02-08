@@ -41,6 +41,8 @@ attacked = false;
 //playable
 playable = false;
 
+
+exiting = false;
 alarm[1] = room_speed * 2;
 
 </string>
@@ -293,6 +295,20 @@ if(playable) {
     if(door != noone &amp;&amp; room_exists(door.room_to)) {
         playable = false;
         obj_player_stats.door = door.room_to;
+        if(obj_player_stats.level == 1) {
+            direct = 3;
+            sprite_index = sp_player_walking_down;
+            image_speed = 0.083;
+        } else if(obj_player_stats.level == 2) {
+            direct = 1;
+            sprite_index = sp_player_walking_up;
+            image_speed = 0.083;
+        } else if(obj_player_stats.level == 3) {
+            direct = 0;
+            sprite_index = sp_player_walking_right;
+            image_speed = 0.083;
+        }
+        exiting = true;
         alarm[2] = room_speed;
     }
     
@@ -322,6 +338,14 @@ if(playable) {
     }
     
     depth = -y;
+} else if(exiting) {
+    if(obj_player_stats.level == 1) {
+        y += obj_player_stats.spd_walk;
+    } else if(obj_player_stats.level == 2) {
+        y -= obj_player_stats.spd_walk;
+    } else if(obj_player_stats.level == 3) {
+        x += obj_player_stats.spd_walk;
+    }
 }
 </string>
           </argument>
