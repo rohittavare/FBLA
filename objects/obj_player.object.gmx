@@ -271,6 +271,14 @@ if(playable) {
         }
     }
     
+    damage_counter = instance_place(x, y, obj_spike_damage);
+    if(damage_counter != noone) {
+        if(abs(damage_counter.x - x) &lt; 40 &amp;&amp; abs(damage_counter.y - y) &lt; 40) {
+            obj_player_stats.player_health -= damage_counter.damage;
+            with (damage_counter) instance_destroy();
+        }
+    }
+    
     health_counter = instance_place(x, y, obj_health_pack);
     if(health_counter != noone) {
         if(abs(health_counter.x - x) &lt; 40 &amp;&amp; abs(health_counter.y - y) &lt; 40) {
@@ -343,7 +351,7 @@ if(playable) {
         y += obj_player_stats.spd_walk;
     } else if(obj_player_stats.level == 2) {
         y -= obj_player_stats.spd_walk;
-    } else if(obj_player_stats.level == 3) {
+    } else if(obj_player_stats.level == 3 || obj_player_stats.level == 0) {
         x += obj_player_stats.spd_walk;
     }
 }

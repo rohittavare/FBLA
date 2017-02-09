@@ -587,4 +587,107 @@ if(level_num == 1) {
             }
         }
     }
+} else if(level_num == 5) {
+    //Resize the room
+    room_width = CELL_WIDTH * 10;
+    room_height = CELL_HEIGHT * 5;
+    
+    //set grid dimentions
+    grid_width = room_width div CELL_WIDTH;
+    grid_height = room_height div CELL_HEIGHT;
+    
+    start_x = 1;
+    start_y = 1;
+    
+    instance_create(start_x*CELL_WIDTH + CELL_WIDTH/2, start_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_player);
+    
+    for(var grid_y = 1; grid_y < grid_height - 1; grid_y++) {
+        for(var grid_x = 1; grid_x < grid_width - 1; grid_x++) {
+            grid[# grid_x, grid_y] = FLOOR;
+        }
+    }
+    
+     //probability of a pickup
+    var odds_pickup = 2;
+    
+    //chance that a pickup will be a coin
+    var odds_coin = 5;
+    
+    //Mark all void cells neighboring a floor cell as WALL
+    for(var grid_y = 1; grid_y < grid_height - 1; grid_y++) {
+        for(var grid_x = 1; grid_x < grid_width - 1; grid_x++) {
+            if(grid[# grid_x, grid_y] == FLOOR) {
+                var walls = 0;
+                if(grid[# grid_x + 1, grid_y] == VOID || grid[# grid_x + 1, grid_y] == WALL) { 
+                    grid[# grid_x + 1, grid_y] = WALL;
+                    walls++;
+                }
+                if(grid[# grid_x - 1, grid_y] == VOID || grid[# grid_x - 1, grid_y] == WALL) { 
+                    grid[# grid_x - 1, grid_y] = WALL;
+                    walls++;
+                }
+                if(grid[# grid_x, grid_y + 1] == VOID || grid[# grid_x, grid_y + 1] == WALL) { 
+                    grid[# grid_x, grid_y + 1] = WALL;
+                    walls++;
+                }
+                if(grid[# grid_x, grid_y - 1] == VOID || grid[# grid_x, grid_y - 1] == WALL) { 
+                    grid[# grid_x, grid_y - 1] = WALL;
+                    walls++;
+                }
+                if(walls == 3) {
+                    if(irandom(odds_coin) == odds_coin && irandom(odds_pickup) == odds_pickup) {
+                        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_coin);
+                    } else {
+                        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+                    }
+                }
+            }
+        }
+    }
+    
+    //marking exit location
+    exit_x = 9;
+    exit_y = 3;
+    
+    //marking the exit
+    grid[# exit_x, exit_y] = EXIT;
+    grid[# start_x, start_y] = ENTRANCE;
+    
+    //position the door to the next level
+    obj_door.x = exit_x*CELL_WIDTH + CELL_WIDTH/2;
+    obj_door.y = exit_y*CELL_HEIGHT + CELL_HEIGHT/2;
+    
+    //Drawing tiles to screen
+    for(var grid_y = 0; grid_y < grid_height; grid_y++) {
+        for(var grid_x = 0; grid_x < grid_width; grid_x++) {
+            if(grid[# grid_x, grid_y] == FLOOR) {
+                //Draw floor
+                tile_add(bg_floor, 0, 0, CELL_WIDTH, CELL_HEIGHT, grid_x*CELL_WIDTH, grid_y*CELL_HEIGHT, 1);
+            }
+            if(grid[# grid_x, grid_y] == WALL) {
+                //Identify wall in enemy pathfinding
+                mp_grid_add_cell(enemy_grid, grid_x, grid_y);
+                //Draw walls
+                tile_add(bg_wall, 0, 0, CELL_WIDTH, CELL_HEIGHT + 32, grid_x*CELL_WIDTH, grid_y*CELL_HEIGHT - 32, (grid_y*CELL_HEIGHT + CELL_HEIGHT)*-1);
+            }
+            if(grid[# grid_x, grid_y] == VOID) {
+                //Identify voids in enemy pathfinding
+                mp_grid_add_cell(enemy_grid, grid_x, grid_y);
+                //Draw voids
+                tile_add(bg_wall, 0, 0, CELL_WIDTH, CELL_HEIGHT + 32, grid_x*CELL_WIDTH, grid_y*CELL_HEIGHT - 32, (grid_y*CELL_HEIGHT + CELL_HEIGHT)*-1);
+            }
+            if(grid[# grid_x, grid_y] == EXIT || grid[# grid_x, grid_y] == ENTRANCE) {
+                tile_add(bg_floor, 0, 0, CELL_WIDTH, CELL_HEIGHT, grid_x*CELL_WIDTH, grid_y*CELL_HEIGHT, 1);
+            }
+        }
+    }
+    
+    instance_create(5*CELL_WIDTH, 3*CELL_HEIGHT, obj_spikes);
+    
 }
+
+
+
+
+
+

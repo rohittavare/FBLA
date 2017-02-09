@@ -47,10 +47,11 @@ direct = 2;
 //damage
 damage = 1;
 //level
-level = 1;
+level = 0;
 
 steps = 0;
 
+draw_set_font(fnt_retro_12);
 //door
 door = noone;
 //dead
@@ -80,8 +81,12 @@ isdead = false;
             <string>with(obj_player) instance_destroy();
 player_lives --;
 player_health = max_health;
-instance_create(Level.start_x * CELL_WIDTH + CELL_WIDTH/2, Level.start_y * CELL_HEIGHT + CELL_HEIGHT/2, obj_player);
-isdead = false;
+if(player_lives &gt; 0) {
+    instance_create(Level.start_x * CELL_WIDTH + CELL_WIDTH/2, Level.start_y * CELL_HEIGHT + CELL_HEIGHT/2, obj_player);
+    isdead = false;
+} else {
+    room_goto(rm_game_over);
+}
 </string>
           </argument>
         </arguments>
@@ -137,20 +142,22 @@ if(player_health &lt;= 0 &amp;&amp; !isdead) {
             <string>///Draw stamina and health
 stam = (stamina/60)*100;
 he = (player_health/max_health) * 100;
-draw_set_color(c_white);
-draw_sprite(sp_stamina_bar, 0, 116, 14);
-draw_healthbar(120, 15, 900, 25, stam, c_black, c_white, c_white, 0, false, false);
-draw_sprite(sp_stamina_bar, 1, 116, 14);
-draw_sprite(sp_health_bar, 1, 116, 29);
-draw_healthbar(120, 30, 820, 46, he, c_black, c_red, c_lime, 0, false, false);
-draw_sprite(sp_health_bar, 0, 116, 29);
-var i = 0;
-repeat(player_lives) {
-    draw_sprite(sp_heart, 0, 120 + (40*i), 53);
-    i++;
+if(room != rm_game_over) {
+    draw_set_color(c_white);
+    draw_sprite(sp_stamina_bar, 0, 116, 14);
+    draw_healthbar(120, 15, 900, 25, stam, c_black, c_white, c_white, 0, false, false);
+    draw_sprite(sp_stamina_bar, 1, 116, 14);
+    draw_sprite(sp_health_bar, 1, 116, 29);
+    draw_healthbar(120, 30, 820, 46, he, c_black, c_red, c_lime, 0, false, false);
+    draw_sprite(sp_health_bar, 0, 116, 29);
+    var i = 0;
+    repeat(player_lives) {
+        draw_sprite(sp_heart, 0, 120 + (40*i), 53);
+        i++;
+    }
+    draw_set_color(c_yellow);
+    draw_text(120, 93, "points: " + string(points));
 }
-draw_set_color(c_yellow);
-draw_text(120, 93, "points: " + string(points));
 
 </string>
           </argument>
