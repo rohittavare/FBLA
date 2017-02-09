@@ -104,7 +104,7 @@ button = 1;
         </arguments>
       </action>
     </event>
-    <event eventtype="10" enumb="13">
+    <event eventtype="10" enumb="90">
       <action>
         <libid>1</libid>
         <id>603</id>
