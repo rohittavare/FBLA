@@ -84,6 +84,7 @@
     <sprites name="sp_main_menu">
       <sprite>sprites\sp_start</sprite>
       <sprite>sprites\sp_exit</sprite>
+      <sprite>sprites\sp_arrow</sprite>
     </sprites>
     <sprite>sprites\sp_gameover</sprite>
     <sprite>sprites\sp_spikes</sprite>
@@ -118,10 +119,12 @@
     <script>scripts\move.gml</script>
     <script>scripts\get_path_to_player.gml</script>
     <script>scripts\create_level.gml</script>
+    <script>scripts\scr_menu.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_retro_12</font>
     <font>fonts\fnt_retro_32</font>
+    <font>fonts\ft_press_start_2P</font>
   </fonts>
   <objects name="objects">
     <object>objects\obj_player</object>
@@ -142,6 +145,7 @@
     <objects name="MainMenu">
       <object>objects\obj_start</object>
       <object>objects\obj_exit</object>
+      <object>objects\obj_menu_object</object>
     </objects>
     <object>objects\obj_gameover</object>
     <object>objects\obj_win</object>
