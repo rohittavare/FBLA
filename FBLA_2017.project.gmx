@@ -120,6 +120,9 @@
     <script>scripts\get_path_to_player.gml</script>
     <script>scripts\create_level.gml</script>
     <script>scripts\scr_menu.gml</script>
+    <script>scripts\get_leaderboard.gml</script>
+    <script>scripts\write_leaderboard.gml</script>
+    <script>scripts\insert_leaderboard.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_retro_12</font>
@@ -156,6 +159,7 @@
     <object>objects\obj_show_x</object>
     <object>objects\obj_show_z</object>
     <object>objects\obj_show_keys</object>
+    <object>objects\obj_leaderboard</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>
