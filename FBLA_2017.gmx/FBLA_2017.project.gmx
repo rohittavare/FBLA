@@ -62,6 +62,10 @@
     <sprite>sprites\sp_zombie_dying</sprite>
     <sprite>sprites\sp_stamina_bar</sprite>
     <sprite>sprites\sp_health_bar</sprite>
+    <sprites name="sp_main_menu">
+      <sprite>sprites\sp_start</sprite>
+      <sprite>sprites\sp_exit</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_grass</background>
@@ -105,8 +109,13 @@
     <object>objects\obj_level_title</object>
     <object>objects\obj_health_pack</object>
     <object>objects\obj_coin</object>
+    <objects name="MainMenu">
+      <object>objects\obj_start</object>
+      <object>objects\obj_exit</object>
+    </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\rm_menu</room>
     <room>rooms\rm_map_1</room>
     <room>rooms\rm_level_1</room>
     <room>rooms\rm_map_2</room>
