@@ -41,7 +41,7 @@ attacked = false;
 //playable
 playable = false;
 
-
+//variables used later
 exiting = false;
 alarm[1] = room_speed * 2;
 
@@ -92,7 +92,7 @@ with (obj_player_stats) room_goto(door);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///start playing
+            <string>///start playing (after the level title is shown)
 playable = true;
 </string>
           </argument>
@@ -142,8 +142,8 @@ attacked = false;
           <argument>
             <kind>1</kind>
             <string>///Movement
-//check keyboard inputs
 if(playable) {
+//check keyboard inputs
     var right_key = keyboard_check(vk_right);
     var left_key = keyboard_check(vk_left);
     var up_key = keyboard_check(vk_up);
@@ -151,12 +151,14 @@ if(playable) {
     var Z = keyboard_check_pressed(ord('Z'));
     var X = keyboard_check(ord('X'));
     
+    //variables to track x and y displacement
     var vspd = 0;
     var hspd = 0;
     
     //character movement
     if(!attacking) {
         if(X) {
+            //running sprite if sufficient stamina
             if(obj_player_stats.stamina &gt; 0) {
                 if(up_key &amp;&amp; !down_key) {
                     vspd -= obj_player_stats.spd_run;
@@ -180,9 +182,11 @@ if(playable) {
                     sprite_index = sp_player_running_right;
                     image_speed = 0.083;
                 }
+                //remove stamina if running (not just x button pressed)
                 if(hspd != 0 || vspd != 0) {
                     obj_player_stats.stamina -= .25;
                 } else {
+                //or just stand around. thats cool
                     if(direct == 0) {
                         sprite_index = sp_player_standing_right;
                     } else if(direct == 1) {
@@ -194,6 +198,7 @@ if(playable) {
                     }
                 }
             } else {
+            //animate the proper sprite to be tired (no stamina)
                 if(up_key &amp;&amp; !down_key) {
                     vspd -= obj_player_stats.spd_tired;
                     direct = 1;
@@ -220,9 +225,11 @@ if(playable) {
             }
             
         } else {
+        //regain stamina when walking
             if(obj_player_stats.stamina &lt; 60) {
                 obj_player_stats.stamina += .02;
             }
+            //get the proper walking sprite
             if(up_key &amp;&amp; !down_key) {
                 vspd -= obj_player_stats.spd_walk;
                 direct = 1;
@@ -248,6 +255,7 @@ if(playable) {
             
             
         }
+        //standing around again
         if(hspd == 0 &amp;&amp; vspd == 0) {
             if(direct == 0 &amp;&amp; sprite_index != sp_player_standing_right) {
                 sprite_index = sp_player_standing_right;
@@ -261,38 +269,63 @@ if(playable) {
         }
     }
     
+    //move the player
     move(hspd, vspd);
     
+    //prevent the player from wolking out the level start
+    if(obj_player_stats.level == 1) {
+        if(y &lt; 0) {
+            y = 0;
+        }
+    } else if (obj_player_stats.level == 2) {
+        if(y &gt; room_height) {
+            y = room_height;
+        }
+    } else if (obj_player_stats.level == 3) {
+        if(x &lt; 0) {
+            x = 0;
+        }
+    }
+    
+    //check to see if the player is touching a damage counter
     damage_counter = instance_place(x, y, obj_player_damage);
     if(damage_counter != noone) {
         if(abs(damage_counter.x - x) &lt; 40 &amp;&amp; abs(damage_counter.y - y) &lt; 40) {
+        //take damage and destroy the damage counter after use
             obj_player_stats.player_health -= damage_counter.damage;
             with (damage_counter) instance_destroy();
         }
     }
     
+    //check to see if the player is touching a damage counter (by spiked floors)
     damage_counter = instance_place(x, y, obj_spike_damage);
     if(damage_counter != noone) {
         if(abs(damage_counter.x - x) &lt; 40 &amp;&amp; abs(damage_counter.y - y) &lt; 40) {
+            //take damage and destroy the damage counter after use
             obj_player_stats.player_health -= damage_counter.damage;
             with (damage_counter) instance_destroy();
         }
     }
     
+    //check to see if the player is touching a heart
     health_counter = instance_place(x, y, obj_health_pack);
     if(health_counter != noone) {
         if(abs(health_counter.x - x) &lt; 40 &amp;&amp; abs(health_counter.y - y) &lt; 40) {
+        //gain health, but do not exceed maximum health
             obj_player_stats.player_health += health_counter.health_val;
             if(obj_player_stats.player_health &gt; obj_player_stats.max_health) {
                 obj_player_stats.player_health = obj_player_stats.max_health;
             }
+            //destroy the heart after used
             with (health_counter) instance_destroy();
         }
     }
     
+    //check to see if the player is touching the coin
     coin_item = instance_place(x, y, obj_coin);
     if(coin_item != noone) {
         if(abs(coin_item.x - x) &lt; 40 &amp;&amp; abs(coin_item.y - y) &lt; 40) {
+        //add points, and destroy coin after used
             obj_player_stats.points += coin_item.point_val;
             with (coin_item) instance_destroy();
         }
@@ -303,6 +336,7 @@ if(playable) {
     if(door != noone &amp;&amp; room_exists(door.room_to)) {
         playable = false;
         obj_player_stats.door = door.room_to;
+        //animate the player walking out of the level, depending on the current level
         if(obj_player_stats.level == 1) {
             direct = 3;
             sprite_index = sp_player_walking_down;
@@ -316,12 +350,16 @@ if(playable) {
             sprite_index = sp_player_walking_right;
             image_speed = 0.083;
         }
+        //signify the exit animation to play, and exit room afterwards
         exiting = true;
         alarm[2] = room_speed;
     }
     
+    //Start an attack if the attack key is pressed, but not mid-swing
     if(Z &amp;&amp; !attacking) {
+    //identify sword swing has begun
         attacking = true;
+        //use correct sprite
         if(direct == 0 &amp;&amp; sprite_index) {
             sprite_index = sp_player_attacking_right;
         } else if(direct == 1) {
@@ -335,9 +373,12 @@ if(playable) {
         alarm[0] = 18;
     }
     
+    //place damage counter when the player is at maximum sword swing
     if(attacking &amp;&amp; image_index &gt;= 1 &amp;&amp; !attacked) {
+    //some math to determine how to place the counter in front of player
         var attack_x = lengthdir_x(32, direct*90) + x;
         var attack_y = lengthdir_y(32, direct*90) + y;
+        //place the counter in front and on the player
         damage_obj = instance_create(attack_x, attack_y, obj_enemy_damage);
         damage_obj.damage = obj_player_stats.damage;
         damage_obj = instance_create(x, y, obj_enemy_damage);
@@ -345,8 +386,10 @@ if(playable) {
         attacked = true;
     }
     
+    //change depth based on verical position
     depth = -y;
 } else if(exiting) {
+//continue exit animation
     if(obj_player_stats.level == 1) {
         y += obj_player_stats.spd_walk;
     } else if(obj_player_stats.level == 2) {
@@ -359,8 +402,6 @@ if(playable) {
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="4" ename="obj_player_damage">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -377,8 +418,48 @@ if(playable) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>obj_player_stats.player_health -= other.damage;
-with (other) instance_destroy();
+            <string>///show help controls
+//works only in tutorial
+if(obj_player_stats.level == 0) {
+    //check to see if the player is touching the show x button tile
+    x_tile = instance_place(x, y, obj_show_x);
+    if(x_tile != noone) {
+        if(obj_btn_x.sprite_index != sp_btn_x) {
+            obj_btn_x.sprite_index = sp_btn_x;
+            obj_btn_x.image_speed = 0.033;
+        }
+    } else {
+        if(obj_btn_x.sprite_index != sp_blank) {
+            obj_btn_x.sprite_index = sp_blank;
+        }
+    }
+    
+    //check to see if the player is touching the show z button tile
+    z_tile = instance_place(x, y, obj_show_z);
+    if(z_tile != noone) {
+        if(obj_btn_z.sprite_index != sp_btn_z) {
+            obj_btn_z.sprite_index = sp_btn_z;
+            obj_btn_z.image_speed = 0.033;
+        }
+    } else {
+        if(obj_btn_z.sprite_index != sp_blank) {
+            obj_btn_z.sprite_index = sp_blank;
+        }
+    }
+    
+    //check to see if the player is touching the show keys tile
+    key_tile = instance_place(x, y, obj_show_keys);
+    if(key_tile != noone) {
+        if(obj_keys.sprite_index != sp_keys) {
+            obj_keys.sprite_index = sp_keys;
+            obj_keys.image_speed = 0.033;
+        }
+    } else {
+        if(obj_keys.sprite_index != sp_blank) {
+            obj_keys.sprite_index = sp_blank;
+        }
+    }
+}
 </string>
           </argument>
         </arguments>

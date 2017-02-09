@@ -111,11 +111,14 @@ if(level_num == 1) {
                     grid[# grid_x, grid_y - 1] = WALL;
                     walls++;
                 }
+                //if we have a corner, then try to spawn a pickup item
                 if(walls == 3 && irandom(odds_pickup) == odds_pickup) {
-                    if(irandom(odds_coin) == odds_coin) {
-                        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/4, obj_coin);
-                    } else {
-                        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/4, obj_health_pack);
+                    if(irandom(odds_pickup) == odds_pickup) {
+                        if(irandom(odds_coin) == odds_coin) {
+                            instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_coin);
+                        } else {
+                            instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+                        }
                     }
                 }
             }
@@ -285,11 +288,14 @@ if(level_num == 1) {
                     grid[# grid_x, grid_y - 1] = WALL;
                     walls++;
                 }
+                //if we have a corner, then try to spawn a pickup item
                 if(walls == 3) {
-                    if(irandom(odds_coin) == odds_coin && irandom(odds_pickup) == odds_pickup) {
-                        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/4, obj_coin);
-                    } else {
-                        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/4, obj_health_pack);
+                    if(irandom(odds_pickup) == odds_pickup) {
+                        if(irandom(odds_coin) == odds_coin) {
+                            instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_coin);
+                        } else {
+                            instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+                        }
                     }
                 }
             }
@@ -418,6 +424,9 @@ if(level_num == 1) {
     //chance that a pickup will be a coin
     var odds_coin = 5;
     
+    //chance of spike floors
+    var odd_spikes = 10;
+    
     //Mark all void cells neighboring a floor cell as WALL
     for(var grid_y = 1; grid_y < grid_height - 1; grid_y++) {
         for(var grid_x = 1; grid_x < grid_width - 1; grid_x++) {
@@ -439,11 +448,27 @@ if(level_num == 1) {
                     grid[# grid_x, grid_y - 1] = WALL;
                     walls++;
                 }
+                //if we have a corner, then try to spawn a pickup item
                 if(walls == 3) {
-                    if(irandom(odds_coin) == odds_coin && irandom(odds_pickup) == odds_pickup) {
-                        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_coin);
-                    } else {
-                        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+                    if(irandom(odds_pickup) == odds_pickup) {
+                        if(irandom(odds_coin) == odds_coin) {
+                            instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_coin);
+                        } else {
+                            instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+                        }
+                    }
+                } else {
+                //or maybe we want some spiky floors?
+                    if(irandom(odd_spikes) == odd_spikes) {
+                        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_spikes);
+                        if(irandom(odds_pickup) == odds_pickup) {
+                            //randomly spawn an item to entice the player
+                            if(irandom(odds_coin) == odds_coin) {
+                                instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_coin);
+                            } else {
+                                instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+                            }
+                        }
                     }
                 }
             }
@@ -520,10 +545,13 @@ if(level_num == 1) {
     }
     
     //probability of a pickup
-    var odds_pickup = 2;
+    var odds_pickup = 5;
     
     //chance that a pickup will be a coin
     var odds_coin = 5;
+    
+    //chance of spike floors
+    var odd_spikes = 5;
     
     for(var grid_y = start_y; grid_y < start_y + 5; grid_y++) {
         for(var grid_x = start_x - 1; grid_x < start_x + 1; grid_x++) {
@@ -552,11 +580,27 @@ if(level_num == 1) {
                     grid[# grid_x, grid_y - 1] = WALL;
                     walls++;
                 }
+                //if we have a corner, then try to spawn a pickup item
                 if(walls == 3) {
-                    if(irandom(odds_coin) == odds_coin && irandom(odds_pickup) == odds_pickup) {
-                        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_coin);
-                    } else {
-                        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+                    if(irandom(odds_pickup) == odds_pickup) {
+                        if(irandom(odds_coin) == odds_coin) {
+                            instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_coin);
+                        } else {
+                            instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+                        }
+                    }
+                } else {
+                    //or maybe we want a spiky floor?
+                    if(irandom(odd_spikes) == odd_spikes) {
+                        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_spikes);
+                        //randomly create a pickup to entice the player
+                        if(irandom(odds_pickup) == odds_pickup) {
+                            if(irandom(odds_coin) == odds_coin) {
+                                instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_coin);
+                            } else {
+                                instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+                            }
+                        }
                     }
                 }
             }
@@ -589,23 +633,53 @@ if(level_num == 1) {
     }
 } else if(level_num == 5) {
     //Resize the room
-    room_width = CELL_WIDTH * 10;
-    room_height = CELL_HEIGHT * 5;
+    room_width = CELL_WIDTH * 12;
+    room_height = CELL_HEIGHT * 15;
     
     //set grid dimentions
     grid_width = room_width div CELL_WIDTH;
     grid_height = room_height div CELL_HEIGHT;
     
-    start_x = 1;
+    start_x = 3;
     start_y = 1;
     
     instance_create(start_x*CELL_WIDTH + CELL_WIDTH/2, start_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_player);
     
-    for(var grid_y = 1; grid_y < grid_height - 1; grid_y++) {
-        for(var grid_x = 1; grid_x < grid_width - 1; grid_x++) {
-            grid[# grid_x, grid_y] = FLOOR;
-        }
+    //drawing out a designed tutorial level
+    
+    for(var grid_y = 1; grid_y < 6; grid_y++) {
+        grid[# 3, grid_y] = FLOOR;
     }
+    
+    for(var grid_x = 2; grid_x < 11; grid_x++) {
+        grid[# grid_x, 5] = FLOOR;
+    }
+    
+    for(var grid_y = 4; grid_y < 10; grid_y++) {
+        grid[# 9, grid_y] = FLOOR;
+    }
+    
+    for(var grid_x = 1; grid_x < 10; grid_x++) {
+        grid[# grid_x, 9] = FLOOR;
+    }
+    
+    for(var grid_y = 8; grid_y < 14; grid_y++) {
+        grid[# 2, grid_y] = FLOOR;
+    }
+    
+    for(var grid_x = 2; grid_x < 12; grid_x++) {
+        grid[# grid_x, 13] = FLOOR;
+    }
+    
+    for(var grid_x = 4; grid_x < 8; grid_x++) {
+        grid[# grid_x, 8] = FLOOR;
+    }
+    
+    for(var grid_x = 4; grid_x < 8; grid_x++) {
+        grid[# grid_x, 10] = FLOOR;
+    }
+    
+    
     
      //probability of a pickup
     var odds_pickup = 2;
@@ -634,20 +708,13 @@ if(level_num == 1) {
                     grid[# grid_x, grid_y - 1] = WALL;
                     walls++;
                 }
-                if(walls == 3) {
-                    if(irandom(odds_coin) == odds_coin && irandom(odds_pickup) == odds_pickup) {
-                        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_coin);
-                    } else {
-                        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
-                    }
-                }
             }
         }
     }
     
     //marking exit location
-    exit_x = 9;
-    exit_y = 3;
+    exit_x = 11;
+    exit_y = 13;
     
     //marking the exit
     grid[# exit_x, exit_y] = EXIT;
@@ -682,7 +749,44 @@ if(level_num == 1) {
         }
     }
     
-    instance_create(5*CELL_WIDTH, 3*CELL_HEIGHT, obj_spikes);
+    //place spikes in designated locations
+    
+    instance_create(5*CELL_WIDTH + CELL_WIDTH/2, 5*CELL_HEIGHT + CELL_HEIGHT/2, obj_spikes);
+    
+    instance_create(7*CELL_WIDTH + CELL_WIDTH/2, 5*CELL_HEIGHT + CELL_HEIGHT/2, obj_spikes);
+    instance_create(8*CELL_WIDTH + CELL_WIDTH/2, 5*CELL_HEIGHT + CELL_HEIGHT/2, obj_spikes);
+    
+    for(var grid_x = 4; grid_x < 9; grid_x++) {
+        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, 13*CELL_HEIGHT + CELL_HEIGHT/2, obj_spikes);
+    }
+    
+    //place pick up items in pre-designed places
+    instance_create(2*CELL_WIDTH + CELL_WIDTH/2, 5*CELL_HEIGHT + CELL_HEIGHT/2, obj_coin);
+    instance_create(10*CELL_WIDTH + CELL_WIDTH/2, 5*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+    instance_create(9*CELL_WIDTH + CELL_WIDTH/2, 4*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+    instance_create(2*CELL_WIDTH + CELL_WIDTH/2, 8*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+    instance_create(1*CELL_WIDTH + CELL_WIDTH/2, 9*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+    instance_create(5*CELL_WIDTH + CELL_WIDTH/2, 13*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+    instance_create(7*CELL_WIDTH + CELL_WIDTH/2, 13*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
+    
+    //add a zombie for tutorial
+    instance_create(4*CELL_WIDTH + CELL_WIDTH/2, 10*CELL_HEIGHT + CELL_HEIGHT/2, obj_zombie_2);
+    
+    //add objects to trigger help buttons
+    for(var grid_y = 1; grid_y < 5; grid_y++) {
+        instance_create(3*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_show_keys);
+    }
+    
+    for(var grid_x = 4; grid_x < 9; grid_x++) {
+        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, 5*CELL_HEIGHT + CELL_HEIGHT/2, obj_show_x);
+        instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, 5*CELL_HEIGHT + CELL_HEIGHT/2, obj_show_keys);
+    }
+    
+    for(var grid_y = 8; grid_y < 11; grid_y++) {
+        for(var grid_x = 3; grid_x < 10; grid_x++) {
+            instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_show_z);
+        }
+    }
     
 }
 

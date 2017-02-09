@@ -25,10 +25,15 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>start_step = 0;
+            <string>///Initialize the map animation between levels
+//the starting point of the red dots
+start_step = 0;
+//end of the red dots
 end_step = 0;
+//next level to go ofter animation
 next_level = noone;
 current_step = start_step;
+//call the frame change event
 alarm[0] = room_speed;
 </string>
           </argument>
@@ -52,7 +57,9 @@ alarm[0] = room_speed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>current_step ++;
+            <string>///frame change
+current_step ++;
+//determine if the animation is complete or not
 if(current_step &lt;= end_step) {
     alarm[0] = room_speed;
 } else {
@@ -81,7 +88,8 @@ if(current_step &lt;= end_step) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>h = view_hport[0];
+            <string>///draw map at center of screen
+h = view_hport[0];
 w = view_wport[0];
 draw_sprite(sp_map, current_step, w/2, h/2);
 </string>

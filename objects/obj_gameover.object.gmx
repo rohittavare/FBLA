@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_font(fnt_retro_32);
+            <string>//set the drawing font
+draw_set_font(fnt_retro_32);
 alarm[0] = room_speed * 2;
 </string>
           </argument>
@@ -49,7 +50,8 @@ alarm[0] = room_speed * 2;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>with(obj_player_stats) instance_destroy();
+            <string>///move to menu after done
+with(obj_player_stats) instance_destroy();
 room_goto(rm_menu);
 </string>
           </argument>

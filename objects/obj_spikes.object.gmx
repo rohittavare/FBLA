@@ -28,6 +28,7 @@
             <string>///initialize the spikes
 depth = -2;
 index = 0;
+//ready to strike?
 ready = false;
 </string>
           </argument>
@@ -51,7 +52,8 @@ ready = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>index = 0;
+            <string>///retract spikes
+index = 0;
 ready = false;
 </string>
           </argument>
@@ -75,7 +77,8 @@ ready = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>index = 2;
+            <string>///extend spike and create damage
+index = 2;
 instance_create(x, y, obj_spike_damage);
 alarm[1] = room_speed;
 </string>
@@ -100,12 +103,15 @@ alarm[1] = room_speed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(place_meeting(x, y, obj_player) &amp;&amp; !ready) {
+            <string>///spike activation
+//get the spieks ready if the player stands on it
+if(place_meeting(x, y, obj_player) &amp;&amp; !ready) {
     ready = true;
     index = 1;
-    alarm[0] = 20;
+    alarm[0] = 25;
 }
 
+//set the proper sprite image
 image_index = index;
 </string>
           </argument>

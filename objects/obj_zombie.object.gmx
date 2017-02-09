@@ -32,16 +32,19 @@ path = path_add();
 seen_player = false;
 alarm[0] = room_speed/4;
 
-
+//variables to control zombie movement
 starting_x = x;
 ending_x = x;
 starting_y = y;
 ending_y = y;
 direct = 3;
+//is the zombie dead?
 dead = false;
 
+//attacking and defense variables
 damage = 2;
 zombie_health = 5;
+//used later (attacking mid-animation)
 attacked = false;
 </string>
           </argument>
@@ -118,6 +121,7 @@ instance_destroy();
             <kind>1</kind>
             <string>/// Enemy Pathfinding
 if(!dead) {
+//follow player only if it 'sees' him/her
     if(seen_player) {
         if(point_distance(x, y, obj_player.x, obj_player.y) &gt; 16) {
             get_path_to_player();
@@ -144,6 +148,7 @@ if(zomb != noone) {
     move(hspd, vspd);
 }*/
 
+//next path check in .25 secs
 alarm[0] = room_speed/4;
 </string>
           </argument>
@@ -171,8 +176,10 @@ alarm[0] = room_speed/4;
 ending_x = x;
 ending_y = y;
 
+//move if the zombie is alive. zombies don't move once destroyed do they?
 if(!dead) {
-
+    
+    //determine the x and y displacement by pathfinding
     if(ending_x &gt; starting_x) {
         direct = 0;
     } else if (ending_x &lt; starting_x) {
@@ -183,6 +190,7 @@ if(!dead) {
         direct = 1;
     }
     
+    //get the right sprite for the job (attacking)
     if(point_distance(x, y, obj_player.x, obj_player.y) &lt; 100) {
         if(direct == 0 &amp;&amp; sprite_index != sp_enemy_attacking_right) {
             sprite_index = sp_enemy_attacking_right;
@@ -201,6 +209,7 @@ if(!dead) {
             image_speed = .083;
         }
     } else if(ending_x != starting_x) {
+        //get the right sprite for the job (walking)
         if(ending_x &gt; starting_x &amp;&amp; sprite_index != sp_enemy_walking_right) {
             sprite_index = sp_enemy_walking_right;
             direct = 0;
@@ -222,6 +231,7 @@ if(!dead) {
         }
         
     } else {
+    // or the zombie can choose to stand. no problems with that.
         if(direct == 0 &amp;&amp; sprite_index != sp_enemy_standing_right) {
             sprite_index = sp_enemy_walking_right;
         }
@@ -283,28 +293,31 @@ starting_y = y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Depth control
+            <string>///movement control
 depth = -y;
 if(!dead) {
     //Avoid overlapping other zombies
     //if(!still) {
         zomb = instance_place(x, y, obj_zombie);
+        //is there is a zombie is there then do stuff
         if(zomb != noone) {
+            //move slightly to make some room
             if(zomb.x == x &amp;&amp; zomb.y == y) {
                 move(sign(zomb.id - id), 0);
             }
-            
+            //move away from the other zombie
             var dir = point_direction(zomb.x, zomb.y, x, y);
             var hspd = lengthdir_x(1, dir);
             var vspd = lengthdir_y(1, dir);
             move(hspd, vspd);
         }
+        //check for the other kind of zombie
         zomb = instance_place(x, y, obj_zombie_2);
         if(zomb != noone) {
             if(zomb.x == x &amp;&amp; zomb.y == y) {
                 move(sign(zomb.id - id), 0);
             }
-            
+            //same as above
             var dir = point_direction(zomb.x, zomb.y, x, y);
             var hspd = lengthdir_x(1, dir);
             var vspd = lengthdir_y(1, dir);
@@ -312,12 +325,15 @@ if(!dead) {
         }
     //}
     
+    //check to see if the zombie is touching a damage counter
     damage_counter = instance_place(x, y, obj_enemy_damage);
     if(damage_counter != noone) {
         if(abs(damage_counter.x - x) &lt; 40 &amp;&amp; abs(damage_counter.y - y) &lt; 40) {
+            //reduce health and destroy counter after use
             zombie_health -= damage_counter.damage;
             with (damage_counter) instance_destroy();
             if(zombie_health &lt;= 0) {
+            //award points is dead and start dying animation
                 obj_player_stats.points += 100;
                 dead = true;
                 sprite_index = sp_enemy_dying;
@@ -326,55 +342,29 @@ if(!dead) {
         }
     }
     
+    //if the zombie is in full attack, create a damage counter in front
     if(sprite_index == sp_enemy_attacking_up || sprite_index == sp_enemy_attacking_down || 
         sprite_index == sp_enemy_attacking_right || sprite_index == sp_enemy_attacking_left) {
             if(image_index &gt;= 1 &amp;&amp; attacked == false) {
+            //math to determine the location of the counter
                 var attack_x = lengthdir_x(16, direct*90) + x;
                 var attack_y = lengthdir_y(16, direct*90) + y;
+                //place the counter and edit the damage
                 damage_obj = instance_create(attack_x, attack_y, obj_player_damage);
                 damage_obj.damage = damage;
                 attacked = true;
             } else if(image_index &lt;= 1 &amp;&amp; attacked == true) {
+                //finish the attack
                 attacked = false;
             }
     }
 }
 
+// is the zombie dead? if so then destory.
 if(dead &amp;&amp; image_index &gt;= 2) {
     instance_destroy();
 }
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="obj_zombie">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Avoid overlapping other zombies
-if(other.x == x &amp;&amp; other.y == y) {
-    move(sign(other.id - id), 0);
-}
-
-var dir = point_direction(other.x, other.y, x, y);
-var hspd = lengthdir_x(1, dir);
-var vspd = lengthdir_y(1, dir);
-move(hspd, vspd);
 </string>
           </argument>
         </arguments>

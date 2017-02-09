@@ -52,6 +52,7 @@ ds_grid_set_region(grid, 0, 0, grid_width - 1, grid_height - 1, VOID);
 //Set level
 level = 1;
 
+//------------------------------- the following section is level building. this process was outsorced to a script -----------
 //Create random seed
 /*randomize();
 
@@ -211,30 +212,6 @@ for(var grid_y = 0; grid_y &lt; grid_height; grid_y++) {
             <kind>1</kind>
             <string>///Destroy grid variables
 ds_grid_destroy(grid);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="32">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Reset world
-room_restart();
 </string>
           </argument>
         </arguments>

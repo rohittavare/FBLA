@@ -87,6 +87,10 @@
     </sprites>
     <sprite>sprites\sp_gameover</sprite>
     <sprite>sprites\sp_spikes</sprite>
+    <sprite>sprites\sp_blank_64</sprite>
+    <sprite>sprites\sp_btn_x</sprite>
+    <sprite>sprites\sp_btn_z</sprite>
+    <sprite>sprites\sp_keys</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_grass</background>
@@ -140,7 +144,14 @@
       <object>objects\obj_exit</object>
     </objects>
     <object>objects\obj_gameover</object>
+    <object>objects\obj_win</object>
     <object>objects\obj_spikes</object>
+    <object>objects\obj_btn_x</object>
+    <object>objects\obj_btn_z</object>
+    <object>objects\obj_keys</object>
+    <object>objects\obj_show_x</object>
+    <object>objects\obj_show_z</object>
+    <object>objects\obj_show_keys</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>
@@ -153,6 +164,7 @@
     <room>rooms\rm_level_3</room>
     <room>rooms\rm_boss</room>
     <room>rooms\rm_game_over</room>
+    <room>rooms\rm_win</room>
   </rooms>
   <constants number="7">
     <constant name="ENTRANCE">-9</constant>
