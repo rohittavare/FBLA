@@ -119,6 +119,7 @@
     <sprite>sprites\sp_boss_attacking_up</sprite>
     <sprite>sprites\sp_boss_dying</sprite>
     <sprite>sprites\sp_blank_128</sprite>
+    <sprite>sprites\sprite83</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_grass</background>
