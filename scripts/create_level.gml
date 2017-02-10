@@ -329,6 +329,7 @@ if(level_num == 1) {
             }
         }
     }
+    audio_play_sound(snd_mountain, 5, true);
 } else if(level_num == 3) {
     //creating the starting point of the level
     start_x = 0;
@@ -500,6 +501,7 @@ if(level_num == 1) {
             }
         }
     }
+    audio_play_sound(snd_lab, 5, true);
 } else if(level_num == 4) {
     //creating the starting point of the level
     start_x = grid_width div 2;
@@ -559,6 +561,8 @@ if(level_num == 1) {
             grid[# grid_x + 1, grid_y] = FLOOR;
         }
     }
+    
+    instance_create(start_x*CELL_WIDTH + CELL_WIDTH/2, (start_y + 3)*CELL_HEIGHT + CELL_HEIGHT/2, obj_boss);
     
     //Mark all void cells neighboring a floor cell as WALL
     for(var grid_y = 1; grid_y < grid_height - 1; grid_y++) {

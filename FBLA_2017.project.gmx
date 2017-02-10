@@ -29,6 +29,9 @@
     <sound>sound\snd_hit</sound>
     <sound>sound\snd_health</sound>
     <sound>sound\snd_swing</sound>
+    <sound>sound\snd_mountain</sound>
+    <sound>sound\snd_lab</sound>
+    <sound>sound\snd_gameover</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\sp_blank</sprite>
@@ -102,6 +105,20 @@
     <sprite>sprites\sp_btn_z</sprite>
     <sprite>sprites\sp_keys</sprite>
     <sprite>sprites\sp_cursor</sprite>
+    <sprite>sprites\sp_boss_standing_down</sprite>
+    <sprite>sprites\sp_boss_standing_right</sprite>
+    <sprite>sprites\sp_boss_standing_left</sprite>
+    <sprite>sprites\sp_boss_standing_up</sprite>
+    <sprite>sprites\sp_boss_walking_down</sprite>
+    <sprite>sprites\sp_boss_walking_right</sprite>
+    <sprite>sprites\sp_boss_walking_left</sprite>
+    <sprite>sprites\sp_boss_walking_up</sprite>
+    <sprite>sprites\sp_boss_attacking_down</sprite>
+    <sprite>sprites\sp_boss_attacking_right</sprite>
+    <sprite>sprites\sp_boss_attacking_left</sprite>
+    <sprite>sprites\sp_boss_attacking_up</sprite>
+    <sprite>sprites\sp_boss_dying</sprite>
+    <sprite>sprites\sp_blank_128</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_grass</background>
@@ -123,12 +140,14 @@
     <background>background\bg_zombie</background>
     <background>background\bg_zombie_2</background>
     <background>background\bg_main_menu</background>
+    <background>background\bg_boss</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\walkable.gml</script>
     <script>scripts\move.gml</script>
     <script>scripts\get_path_to_player.gml</script>
+    <script>scripts\get_boss_to_player.gml</script>
     <script>scripts\create_level.gml</script>
     <script>scripts\scr_menu.gml</script>
     <script>scripts\get_leaderboard.gml</script>
@@ -147,11 +166,13 @@
     <object>objects\obj_map</object>
     <object>objects\obj_view</object>
     <object>objects\obj_zombie</object>
+    <object>objects\obj_boss</object>
     <object>objects\obj_zombie_2</object>
     <object>objects\obj_door</object>
     <object>objects\obj_player_damage</object>
     <object>objects\obj_spike_damage</object>
     <object>objects\obj_enemy_damage</object>
+    <object>objects\obj_boss_damage</object>
     <object>objects\obj_sight</object>
     <object>objects\obj_level_title</object>
     <object>objects\obj_health_pack</object>

@@ -297,6 +297,14 @@ if(playable) {
         }
     }
     
+    //check to see if the player is touching a damage counter (by boss)
+    damage_counter = instance_place(x, y, obj_boss_damage);
+    if(damage_counter != noone) {
+        //take damage and destroy the damage counter after use
+            obj_player_stats.player_health -= damage_counter.damage;
+            with (damage_counter) instance_destroy();
+    }
+    
     //check to see if the player is touching a damage counter (by spiked floors)
     damage_counter = instance_place(x, y, obj_spike_damage);
     if(damage_counter != noone) {

@@ -213,6 +213,10 @@ for(var grid_y = 0; grid_y &lt; grid_height; grid_y++) {
             <string>///Destroy grid variables
 if(level == 1) {
     audio_stop_sound(snd_forest);
+} else if(level == 2) {
+    audio_stop_sound(snd_mountain);
+} else if(level == 3) {
+    audio_stop_sound(snd_lab);
 } else if(level == 4) {
     audio_stop_sound(snd_boss);
 }
