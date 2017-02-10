@@ -85,6 +85,8 @@
       <sprite>sprites\sp_start</sprite>
       <sprite>sprites\sp_exit</sprite>
       <sprite>sprites\sp_arrow</sprite>
+      <sprite>sprites\sp_teach_txt_move</sprite>
+      <sprite>sprites\sp_select_menu</sprite>
     </sprites>
     <sprite>sprites\sp_gameover</sprite>
     <sprite>sprites\sp_spikes</sprite>
@@ -112,6 +114,7 @@
     <background>background\bg_dark</background>
     <background>background\bg_zombie</background>
     <background>background\bg_zombie_2</background>
+    <background>background\bg_main_menu</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -149,6 +152,8 @@
       <object>objects\obj_start</object>
       <object>objects\obj_exit</object>
       <object>objects\obj_menu_object</object>
+      <object>objects\obj_teach_txt_move</object>
+      <object>objects\obj_teach_txt_select</object>
     </objects>
     <object>objects\obj_gameover</object>
     <object>objects\obj_win</object>
@@ -173,6 +178,7 @@
     <room>rooms\rm_boss</room>
     <room>rooms\rm_game_over</room>
     <room>rooms\rm_win</room>
+    <room>rooms\rm_name_select</room>
   </rooms>
   <constants number="7">
     <constant name="ENTRANCE">-9</constant>
