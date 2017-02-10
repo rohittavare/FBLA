@@ -1,3 +1,6 @@
+//This script handles the selection of menu items
+//and runs the appropriate code needed to continue
+//the game
 switch (mPos){
 
     case 0:

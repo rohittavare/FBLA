@@ -25,11 +25,15 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>menu[0] = "Start Game";
+            <string>//An array is used to allow for modularity and scalabilty
+//The array lists all possible menu items.
+menu[0] = "Start Game";
 menu[1] = "Quit Game";
 audio_play_sound(snd_boss, 5, true);
 
+//Space between each menu item
 space = 64;
+//The current position of the menu index
 mPos = 0;
 
 
@@ -56,10 +60,15 @@ mPos = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>movePos = 0;
+            <string>//movePos is the current key used and moves the 
+//arrow in that direction
+movePos = 0;
 movePos -= max(keyboard_check_pressed(vk_up), 0);
 movePos += max(keyboard_check_pressed(vk_down), 0);
 
+//This if statement handles edge checking to make sure
+//there are no errors and can be scaled to larger number
+//of menus
 if(movePos != 0){
     mPos += move;
     if(mPos &lt; 0){
@@ -69,6 +78,7 @@ if(movePos != 0){
     }
 }
 
+//This outlines the selection of that perticular menu item.
 var push;
 push = max(keyboard_check_pressed(ord("Z")), 0);
 
@@ -98,17 +108,24 @@ if(push = 1){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_halign(fa_left);
+            <string>//This portion sets the necessary guidelines for
+//drawing the text on screen for the menu items
+draw_set_halign(fa_left);
 draw_set_valign(fa_middle);
 draw_set_font(ft_press_start_2P);
 draw_set_color(c_white);
 
+//A for loop goes through the array, inturn allowing to add
+//more menu items if needed. All the spacing is handled in 
+//this loop
 for(var m = 0; m &lt; array_length_1d(menu); m+=1){
 
     draw_text(x + space, y + (m * space), string(menu[m]));
 
 }
 
+//Finally the current arrow sprite is drawn next to the selected
+//menu item
 draw_sprite(sprite_index, 0, x + 16, y + mPos * space);
 </string>
           </argument>
