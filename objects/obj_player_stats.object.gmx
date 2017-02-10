@@ -51,6 +51,8 @@ level = 0;
 
 steps = 0;
 
+display_set_gui_size(940, 540);
+
 //use the retro font
 draw_set_font(fnt_retro_12);
 //door
@@ -148,7 +150,7 @@ if(player_health &lt;= 0 &amp;&amp; !isdead) {
 stam = (stamina/60)*100;
 he = (player_health/max_health) * 100;
 //show the bars in the appropriate rooms
-if(room != rm_game_over || room != rm_win) {
+if(room != rm_game_over &amp;&amp; room != rm_win &amp;&amp; room != rm_name) {
     draw_set_color(c_white);
     //Draw the stamina and health bars (back frame, bar and then top border)
     draw_sprite(sp_stamina_bar, 0, 116, 14);

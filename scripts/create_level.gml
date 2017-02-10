@@ -112,14 +112,14 @@ if(level_num == 1) {
                     walls++;
                 }
                 //if we have a corner, then try to spawn a pickup item
-                if(walls == 3 && irandom(odds_pickup) == odds_pickup) {
-                    if(irandom(odds_pickup) == odds_pickup) {
+                if(walls == 3) {
+                    //if(irandom(odds_pickup) == odds_pickup) {
                         if(irandom(odds_coin) == odds_coin) {
                             instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_coin);
                         } else {
                             instance_create(grid_x*CELL_WIDTH + CELL_WIDTH/2, grid_y*CELL_HEIGHT + CELL_HEIGHT/2, obj_health_pack);
                         }
-                    }
+                    //}
                 }
             }
         }
@@ -170,6 +170,7 @@ if(level_num == 1) {
             }
         }
     }
+    audio_play_sound(snd_forest, 5, true);
 } else if (level_num == 2) {
     //creating the starting point of the level
     start_x = irandom(grid_width - 3) + 1;
@@ -631,6 +632,7 @@ if(level_num == 1) {
             }
         }
     }
+    audio_play_sound(snd_boss, 5, true);
 } else if(level_num == 5) {
     //Resize the room
     room_width = CELL_WIDTH * 12;

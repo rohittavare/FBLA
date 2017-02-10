@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>//set the drawing font
+display_set_gui_size(940, 540);
 draw_set_font(fnt_retro_32);
 alarm[0] = room_speed * 2;
 </string>
@@ -50,9 +51,8 @@ alarm[0] = room_speed * 2;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///move to menu after done
-with(obj_player_stats) instance_destroy();
-room_goto(rm_menu);
+            <string>///move to name editro after done
+room_goto(rm_name);
 </string>
           </argument>
         </arguments>
@@ -79,13 +79,14 @@ room_goto(rm_menu);
 h = view_hport[0];
 w = view_wport[0];
 draw_set_color(c_yellow);
+draw_set_halign(fa_center);
 if(obj_player_stats.level == 4) {
-    draw_text(w/4, h/2 + h/8, "Level: Boss");
+    draw_text(w/2, h/2 + h/8, "Level: Boss");
 } else {
-    draw_text(w/4, h/2 + h/8, "Level: " + string(obj_player_stats.level));
+    draw_text(w/2, h/2 + h/8, "Level: " + string(obj_player_stats.level));
 }
-draw_text(w/4, h/2 + h/4, "Points: " + string(obj_player_stats.points));
-draw_sprite(sp_gameover,0,w/2,h/2);
+draw_text(w/2, h/2 + h/4, "Points: " + string(obj_player_stats.points));
+draw_sprite(sp_gameover,0,w/2,h/4);
 </string>
           </argument>
         </arguments>

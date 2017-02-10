@@ -313,6 +313,7 @@ if(playable) {
         if(abs(health_counter.x - x) &lt; 40 &amp;&amp; abs(health_counter.y - y) &lt; 40) {
         //gain health, but do not exceed maximum health
             obj_player_stats.player_health += health_counter.health_val;
+            audio_play_sound(snd_health, 10, false);
             if(obj_player_stats.player_health &gt; obj_player_stats.max_health) {
                 obj_player_stats.player_health = obj_player_stats.max_health;
             }
@@ -359,6 +360,7 @@ if(playable) {
     if(Z &amp;&amp; !attacking) {
     //identify sword swing has begun
         attacking = true;
+        audio_play_sound(snd_swing, 15, false);
         //use correct sprite
         if(direct == 0 &amp;&amp; sprite_index) {
             sprite_index = sp_player_attacking_right;

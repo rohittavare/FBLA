@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>///destroy instance after 2 seconds
 img = noone;
+display_set_gui_size(940, 540);
 alarm[0] = room_speed * 2;
 //make sure the title is in the front
 depth = -730;
