@@ -28,6 +28,8 @@
             <string>///Initialize the map animation between levels
 //the starting point of the red dots
 start_step = 0;
+
+display_set_gui_size(940, 540);
 //end of the red dots
 end_step = 0;
 //next level to go ofter animation

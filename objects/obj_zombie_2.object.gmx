@@ -317,6 +317,7 @@ if(!dead) {
         if(abs(damage_counter.x - x) &lt; 40 &amp;&amp; abs(damage_counter.y - y) &lt; 40) {
             zombie_health -= damage_counter.damage;
             with (damage_counter) instance_destroy();
+            audio_play_sound(snd_hit, 10, false);
             if(zombie_health &lt;= 0) {
                 obj_player_stats.points += 100;
                 dead = true;

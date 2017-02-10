@@ -332,6 +332,7 @@ if(!dead) {
             //reduce health and destroy counter after use
             zombie_health -= damage_counter.damage;
             with (damage_counter) instance_destroy();
+            audio_play_sound(snd_hit, 10, false);
             if(zombie_health &lt;= 0) {
             //award points is dead and start dying animation
                 obj_player_stats.points += 100;

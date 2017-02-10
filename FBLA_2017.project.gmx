@@ -23,7 +23,13 @@
     </datafile>
   </datafiles>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\snd_boss</sound>
+    <sound>sound\snd_forest</sound>
+    <sound>sound\snd_hit</sound>
+    <sound>sound\snd_health</sound>
+    <sound>sound\snd_swing</sound>
+  </sounds>
   <sprites name="sprites">
     <sprite>sprites\sp_blank</sprite>
     <sprite>sprites\sp_enemy_walking_down</sprite>
@@ -89,11 +95,13 @@
       <sprite>sprites\sp_select_menu</sprite>
     </sprites>
     <sprite>sprites\sp_gameover</sprite>
+    <sprite>sprites\sp_tutorial</sprite>
     <sprite>sprites\sp_spikes</sprite>
     <sprite>sprites\sp_blank_64</sprite>
     <sprite>sprites\sp_btn_x</sprite>
     <sprite>sprites\sp_btn_z</sprite>
     <sprite>sprites\sp_keys</sprite>
+    <sprite>sprites\sp_cursor</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_grass</background>
@@ -165,6 +173,7 @@
     <object>objects\obj_show_z</object>
     <object>objects\obj_show_keys</object>
     <object>objects\obj_leaderboard</object>
+    <object>objects\obj_name</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>
@@ -178,7 +187,7 @@
     <room>rooms\rm_boss</room>
     <room>rooms\rm_game_over</room>
     <room>rooms\rm_win</room>
-    <room>rooms\rm_name_select</room>
+    <room>rooms\rm_name</room>
   </rooms>
   <constants number="7">
     <constant name="ENTRANCE">-9</constant>

@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>menu[0] = "Start Game";
 menu[1] = "Quit Game";
+audio_play_sound(snd_boss, 5, true);
 
 space = 64;
 mPos = 0;
@@ -69,7 +70,7 @@ if(movePos != 0){
 }
 
 var push;
-push = max(keyboard_check_released(ord("Z")), 0);
+push = max(keyboard_check_pressed(ord("Z")), 0);
 
 if(push = 1){
     scr_menu();

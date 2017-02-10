@@ -211,6 +211,11 @@ for(var grid_y = 0; grid_y &lt; grid_height; grid_y++) {
           <argument>
             <kind>1</kind>
             <string>///Destroy grid variables
+if(level == 1) {
+    audio_stop_sound(snd_forest);
+} else if(level == 4) {
+    audio_stop_sound(snd_boss);
+}
 ds_grid_destroy(grid);
 </string>
           </argument>
